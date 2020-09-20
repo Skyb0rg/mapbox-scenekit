@@ -27,8 +27,9 @@ enum FetchError: Int {
 
 internal final class MapboxHTTPAPI {
     private static var operationQueue: OperationQueue = {
+        var tileDownloadTaskDispatchQueue = DispatchQueue(label: "com.mapbox.scenekit.api", attributes: [.concurrent])
         var operationQueue = OperationQueue()
-        operationQueue.underlyingQueue = DispatchQueue(label: "com.mapbox.scenekit.api", attributes: [.concurrent])
+        operationQueue.underlyingQueue = tileDownloadTaskDispatchQueue
         operationQueue.name = "Mapbox API Queue"
         operationQueue.maxConcurrentOperationCount = 10
         return operationQueue
